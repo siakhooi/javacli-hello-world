@@ -1,0 +1,7 @@
+Package: siakhooi-java-hello-world
+Version: 1.0.0
+Maintainer: Siak Hooi <siakhooi@gmail.com>
+Depends: default-jre-headless|openjdk-17-jre-headless|openjdk-18-jre-headless|openjdk-19-jre-headless
+Architecture: amd64
+Homepage: <https://github.com/siakhooi/javacli-hello-world>
+Description: Java program to print hello world.

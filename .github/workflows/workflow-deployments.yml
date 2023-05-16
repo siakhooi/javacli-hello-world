@@ -1,0 +1,45 @@
+name: Deployment
+on:
+  release:
+    types: [created]
+
+jobs:
+  build-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: '17'
+      - run: mvn verify
+      - run: sudo apt install shellcheck
+      - run: ./scripts/shellcheck.sh
+      - run: ./scripts/build-deb.sh
+      - uses: actions/upload-artifact@v3
+        with:
+          name: deliverables
+          path: |
+            ./*.deb
+            ./*.deb.*sum
+      - uses: actions/upload-artifact@v3
+        with:
+          name: target
+          path: ./target/
+  release-assets:
+    needs: [build-quality]
+    uses: ./.github/workflows/deploy-github-release-assets.yml
+    secrets:
+      TOKEN_TO_UPLOAD_ASSETS: ${{ secrets.TOKEN_TO_UPLOAD_ASSETS }}
+  jfrog:
+    needs: [build-quality]
+    uses: ./.github/workflows/publish-to-jfrog.yml
+    secrets:
+      JFROG_TOKEN: ${{ secrets.JFROG_TOKEN }}
+  siakhooi-apt:
+    needs: [build-quality]
+    uses: ./.github/workflows/publish-to-siakhooi-apt.yml
+    secrets:
+      PUBLIC_TO_APT_GITHUB_TOKEN: ${{ secrets.PUBLIC_TO_APT_GITHUB_TOKEN }}
