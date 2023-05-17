@@ -11,9 +11,9 @@ TARGETPATH=docs/pool/main/binary-amd64
 TARGETURL=https://${PUBLIC_TO_APT_GITHUB_TOKEN}@github.com/siakhooi/apt.git
 TARGETBRANCH=main
 TARGETDIR=apt
-TARGET_GIT_EMAIL=shed@siakhooi.github.io
-TARGET_GIT_USERNAME=shed
-TARGET_COMMIT_MESSAGE="shed: Auto deploy [$(date)]"
+TARGET_GIT_EMAIL=javacli-hello-world@siakhooi.github.io
+TARGET_GIT_USERNAME=javacli-hello-world
+TARGET_COMMIT_MESSAGE="javacli-hello-world: Auto deploy [$(date)]"
 
 (
   cd $TMPDIR
