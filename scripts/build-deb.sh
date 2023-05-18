@@ -17,7 +17,7 @@ chmod 755 $TARGET/usr/bin/*
 mkdir -p $TARGET/usr/lib/java/siakhooi
 cp -v "$SOURCE_JAR" $TARGET/usr/lib/java/siakhooi
 
-dpkg-deb --build -Zxz $TARGET
+fakeroot dpkg-deb --build -Zxz $TARGET
 dpkg-name ${TARGET}.deb
 
 DEBFILE=$(ls ./target/*.deb)
